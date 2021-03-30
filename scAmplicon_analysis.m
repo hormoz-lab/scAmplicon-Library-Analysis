@@ -1,17 +1,16 @@
-
 clear all
 
-GeneName = ''; %Add gene name
+GeneName = ''; %Add gene name, for example: 0114_Jak2
 
 
-fileName = ''; %Add file name
+fileName = ''; %Add file name, for exmpale: 0114_Jak2_Miseq
 %Parse barcodes from read1
 
 %Read all 4 lanes
-bc_reads1 = fastqread([fileName, '']);%Finish file name, see examples below
+bc_reads1 = fastqread([fileName, '']);%Finish file name, for example: _L001_R1_001.fastq
 bc_reads2 = fastqread([fileName, '']);
-%bc_reads3 = fastqread([fileName, '_L003_R1_001.fastq']);
-%bc_reads4 = fastqread([fileName, '_L004_R1_001.fastq']);
+%bc_reads3 = fastqread([fileName, '']);
+%bc_reads4 = fastqread([fileName, '']);
 %Aggregate all the reads
 bc_reads = [bc_reads1, bc_reads2];%, bc_reads3, bc_reads4]; %, bc_reads3, bc_reads4];
 
@@ -19,10 +18,10 @@ bcsOrig = {bc_reads.Sequence};
 bcsQCOrig = cellfun(@(x) double(x)-33, {bc_reads.Quality}, 'UniformOutput', false); %in integer format
 
 %Read in the sequences R2
-reads1 = fastqread([fileName, '_L001_R2_001.fastq']);%Finish file name
-reads2 = fastqread([fileName, '_L002_R2_001.fastq']);
-%reads3 = fastqread([fileName, '_L003_R2_001.fastq']);
-%reads4 = fastqread([fileName, '_L004_R2_001.fastq']);
+reads1 = fastqread([fileName, '']);%Finish file name, for example: _L001_R2_001.fastq
+reads2 = fastqread([fileName, '']);
+%reads3 = fastqread([fileName, '']);
+%reads4 = fastqread([fileName, '']);
 %Aggregate all the reads
 reads = [reads1, reads2];%, reads3, reads4];
 
@@ -37,11 +36,12 @@ length(reads)
 %%
 
 %Correct Gene2 sequence, 91 bp downstream of and including the
-%locus_specific primer 3
-corrGene2 = 'GCAGCAAGTATGATGAGCAAGCTTTCTCACAAGCATTTGGTTTTAAATTATGGAGTATGTGTCTGTGGAGACGAGAATATTCTGGTTCAGG'
+%locus_specific primer 3, for example, the correct gene 2 for jak2 is 
+%GCAGCAAGTATGATGAGCAAGCTTTCTCACAAGCATTTGGTTTTAAATTATGGAGTATGTGTCTGTGGAGACGAGAATATTCTGGTTCAGG
+corrGene2 = ''
             
-posMut = 61;
-baseMut = 'T'
+posMut = ; %Location of the mutation, for example: 61 for jak2
+baseMut = '' %Mutated sequence, for example: T for jak2
 
 %Look +- 5 bp of the mutation for the fragment libraries
 
